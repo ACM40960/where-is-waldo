@@ -14,8 +14,7 @@ This project implements an automated visual search system to detect Waldo in den
 ```bash
 where-is-waldo/
 ├── assets/ # assets for readme
-│ └── images/
-│   └── 1.jpg
+│ └── images/ # images for README.md
 │
 ├── datasets/ # train and val datasets (populated from preprocess.py)
 │ ├── train/ # 70% of dataset
@@ -34,6 +33,13 @@ where-is-waldo/
 ├── tests/ # 10% testing dataset
 │    ├── input/ # input data for test
 │    └── output/ # output of test
+│
+├── waldoData/ # 10% testing dataset
+│    ├── Clean/ # input data for test
+│    │ ├── ClearedWaldos/ # bg imgs with no waldo
+│    │ └── OnlyWaldoHeads/ # only waldo heads
+│    ├── NotWaldo/ # imgs populate from generateData.py
+│    └── Waldo/ # imgs populate from generateData.py
 │
 ├── .gitignore
 ├── customLib.py # python utility functions
@@ -99,3 +105,10 @@ where-is-waldo/
     python preprocess.py
 
 By default, preprocess.py writes to ./datasets/train/ (change dest_path to ./datasets/val/ for validation split).
+
+4. (OPTIONAL) Generate extra Training Data - Use onlyWaldoHeads to paste on clear backgrounds with some rotations into 640×640 chips. Images with Waldo will populate in waldoData/Waldo folder. 
+    4.1 Repeat step 2 to create new labels
+    4.2 Append datasets/train and datasets/val accordingly.
+
+    ```bash
+    python generateData.py
