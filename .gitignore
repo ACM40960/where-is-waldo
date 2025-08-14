@@ -1,0 +1,13 @@
+datasets
+Data
+tests
+labelled_data
+models
+*.pt
+*.pth
+__pycache__
+runs
+labels_train
+labels_val
+images_train
+images_val
