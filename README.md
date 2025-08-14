@@ -50,7 +50,8 @@ where-is-waldo/
 ├── preprocess.py # preprocess data****
 ├── README.md 
 ├── requirements.txt
-└── train.py # python script to train data
+├── train.py # python script to train data
+└── waldo.yaml # yaml file (to be referenced by train.py)
 ```
 
 ---
