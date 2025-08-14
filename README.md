@@ -108,7 +108,9 @@ where-is-waldo/
 By default, preprocess.py writes to ./datasets/train/ (change dest_path to ./datasets/val/ for validation split).
 
 4. (OPTIONAL) Generate extra Training Data - Use onlyWaldoHeads to paste on clear backgrounds with some rotations into 640×640 chips. Images with Waldo will populate in waldoData/Waldo folder. 
+
     4.1 Repeat step 2 to create new labels
+
     4.2 Append datasets/train and datasets/val accordingly.
 
     ```bash
