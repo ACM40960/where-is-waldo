@@ -147,3 +147,8 @@ For final testing and inference, the best trained model was used to make predict
 
 If the performance metrics are satisfactory, the best-performing model weights are exported and saved for deployment.
 If not, the training process is revisited with adjusted hyperparameters for further improvement.
+
+### Result : There he is !
+The model is now able to detect Waldo accurately within the images, demonstrating the effectiveness of our object detection pipeline.
+
+![Found Waldo](/assets/images/Found_Waldo.png "Found Waldo")
