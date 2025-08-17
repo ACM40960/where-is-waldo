@@ -16,7 +16,7 @@ where-is-waldo/
 ├── assets/ # assets for readme
 │ └── images/ # images for README.md
 │
-├── datasets/ # train and val datasets (populated from preprocess.py)
+├── datasets/ # train and val datasets (populated from preprocess.py ignored in git due to huge dataset)
 │ ├── train/ # 70% of dataset
 │ │  ├── images/ # jpg files
 │ │  └── labels/ # txt files
@@ -24,17 +24,15 @@ where-is-waldo/
 │    ├── images/ # jpg files
 │    └── labels/ # txt files
 │
-├── labelled_data/ # raw dataset from kaggle
+├── labelled_data/ # raw dataset from kaggle ignored in git upload due to huge dataset
 │ ├── images/ # high-res original images
 │ └── labels/ # resp labels of each img from Roboflow
 │
-├── Models/ # save trained YOLO models from train.py
-│
-├── tests/ # 10% testing dataset
+├── tests/ # 10% testing dataset ignored in git upload due to huge dataset
 │    ├── input/ # input data for test
 │    └── output/ # output of test
 │
-├── waldoData/ # 10% testing dataset
+├── waldoData/ # 10% testing dataset ignored in git upload due to huge dataset
 │    ├── Clean/ # input data for test
 │    │ ├── ClearedWaldos/ # bg imgs with no waldo
 │    │ └── OnlyWaldoHeads/ # only waldo heads
@@ -43,15 +41,15 @@ where-is-waldo/
 │
 ├── .gitignore
 ├── customLib.py # python utility functions
-├── DataAugmentation # generate training data****
+├── generateData.py # generate training data****
 ├── inference.py # predict on test data
 ├── Main # generate training data****
-├── Model # generate training data****
 ├── preprocess.py # preprocess data****
 ├── README.md 
 ├── requirements.txt
 ├── train.py # python script to train data
 └── waldo.yaml # yaml file (to be referenced by train.py)
+└── yolo11n_custom.pt # pretrained weights (model configuration)
 ```
 
 ---
@@ -94,6 +92,12 @@ where-is-waldo/
    ```bash
     pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu118 # Example for CUDA 11.8
     
+5. **Define all User Defined Functions** (define and run all functions to be used in below steps)
+
+   ```bash
+    python customLib.py
+    ```
+    
 ---
 
 ### Dataset Preparation
@@ -127,7 +131,7 @@ In our model, we use YOLOv11 (You Only Look Once version 11), a state-of-the-art
 The YOLOv11 model was trained for object detection using the lightweight yolo11s.pt backbone. Training was performed for 500 epochs with a batch size of 10 and an image size of 640×640 pixels. A weight decay of 0.0005 was applied to regularize the model and reduce overfitting. The dataset path and class configuration were defined in the data.yaml file, and training output (including weights and logs) was saved automatically by Ultralytics.
 
 ```bash
-    !yolo task=detect mode=train data={dataset.location}/data.yaml model="yolo11s.pt" epochs=500 batch=10 weight_decay=0.0005 imgsz=640
+    python train.py
 ```
 
 
@@ -135,14 +139,14 @@ The YOLOv11 model was trained for object detection using the lightweight yolo11s
 Model performance was evaluated on the validation set using the best model checkpoint saved during training. The validation metrics (such as mAP, precision, and recall) were calculated based on the annotations defined in the dataset.
 
 ```bash
-    !yolo task=detect mode=val model="/content/runs/detect/train/weights/best.pt" data={dataset.location}/data.yaml
+    python validate.py
 ```
 ### Testing:
 
 For final testing and inference, the best trained model was used to make predictions on the test images. A confidence threshold of 0.573 was set to filter detections. The predictions were saved for further visualization and review.
 
 ```bash
-    !yolo task=detect mode=predict model="/content/runs/detect/train/weights/best.pt" conf=0.573 source={dataset.location}/test/images save=True
+    python inference.py
 ```
 
 If the performance metrics are satisfactory, the best-performing model weights are exported and saved for deployment.

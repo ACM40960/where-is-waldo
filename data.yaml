@@ -1,0 +1,10 @@
+train: datasets/train/images
+val: datasets/val/images
+
+images: {'jpg','png'}
+
+# Number of classes
+nc: 1
+
+# Class names
+names: ['waldo']
