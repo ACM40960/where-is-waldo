@@ -15,7 +15,6 @@ This project implements an automated visual search system to detect Waldo in den
 where-is-waldo/
 ├── assets/ # assets for readme
 │ └── images/ # images for README.md
-|
 ├── datasets/ # train and val datasets (populated from preprocess.py ignored in git due to huge dataset)
 │ ├── train/ # 70% of dataset
 │ │  ├── images/ # jpg files
@@ -27,7 +26,6 @@ where-is-waldo/
 ├── labelled_data/ # raw dataset from kaggle ignored in git upload due to huge dataset
 │ ├── images/ # high-res original images
 │ └── labels/ # resp labels of each img from Roboflow
-|
 │── models/ #ignored in git upload 
 │ ├── yolo11n_custom.pt # pretrained weights (model configuration)
 ├── tests/ # 10% testing dataset ignored in git upload due to huge dataset
