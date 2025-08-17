@@ -16,6 +16,7 @@ where-is-waldo/
 ├── assets/ # assets for readme
 │ └── images/ # images for README.md
 │
+└── data.yaml # yaml file (to be referenced by train.py)
 ├── datasets/ # train and val datasets (populated from preprocess.py ignored in git due to huge dataset)
 │ ├── train/ # 70% of dataset
 │ │  ├── images/ # jpg files
@@ -27,7 +28,10 @@ where-is-waldo/
 ├── labelled_data/ # raw dataset from kaggle ignored in git upload due to huge dataset
 │ ├── images/ # high-res original images
 │ └── labels/ # resp labels of each img from Roboflow
-│
+|
+│── models/ #ignored in git upload 
+│ ├── yolo11n_custom.pt # pretrained weights (model configuration)
+|
 ├── tests/ # 10% testing dataset ignored in git upload due to huge dataset
 │    ├── input/ # input data for test
 │    └── output/ # output of test
@@ -43,13 +47,10 @@ where-is-waldo/
 ├── customLib.py # python utility functions
 ├── generateData.py # generate training data****
 ├── inference.py # predict on test data
-├── Main # generate training data****
 ├── preprocess.py # preprocess data****
 ├── README.md 
 ├── requirements.txt
 ├── train.py # python script to train data
-└── waldo.yaml # yaml file (to be referenced by train.py)
-└── yolo11n_custom.pt # pretrained weights (model configuration)
 ```
 
 ---
