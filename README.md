@@ -66,6 +66,8 @@ where-is-waldo/
 
 4. Steps: preprocessing → training → evaluation → inference
 
+![Project Structure](/assets/images/waldov2.jpg "Project Structure")
+
 ---
 
 ### Installation
@@ -115,3 +117,32 @@ By default, preprocess.py writes to ./datasets/train/ (change dest_path to ./dat
 
     ```bash
     python generateData.py
+
+### Model Configuration
+![YOLO Model Architecture](/assets/images/YOLOv11.jpg "YOLOv11 Architecture")
+
+The YOLOv11 model is configured for object detection using the Ultralytics CLI with a lightweight pre-trained backbone (yolo11s.pt). It is trained on custom data for 500 epochs with a batch size of 10, using an image resolution of 640×640 pixels. A weight decay of 0.0005 is applied to prevent overfitting. The training is guided by the data.yaml file, which defines the dataset structure, including class names and paths to images. This setup ensures efficient and robust learning tailored for detecting Waldo in the provided dataset.
+
+
+
+### Training the Model
+The YOLOv11 model was trained for object detection using the lightweight yolo11s.pt backbone. Training was performed for 500 epochs with a batch size of 10 and an image size of 640×640 pixels. A weight decay of 0.0005 was applied to regularize the model and reduce overfitting. The dataset path and class configuration were defined in the data.yaml file, and training output (including weights and logs) was saved automatically by Ultralytics.
+
+```bash
+    !yolo task=detect mode=train data={dataset.location}/data.yaml model="yolo11s.pt" epochs=500 batch=10 weight_decay=0.0005 imgsz=640
+```
+
+
+### Validation :
+Model performance was evaluated on the validation set using the best model checkpoint saved during training. The validation metrics (such as mAP, precision, and recall) were calculated based on the annotations defined in the dataset.
+
+### Testing:
+
+For final testing and inference, the best trained model was used to make predictions on the test images. A confidence threshold of 0.573 was set to filter detections. The predictions were saved for further visualization and review.
+
+```bash
+    !yolo task=detect mode=predict model="/content/runs/detect/train/weights/best.pt" conf=0.573 source={dataset.location}/test/images save=True
+```
+
+If the performance metrics are satisfactory, the best-performing model weights are exported and saved for deployment.
+If not, the training process is revisited with adjusted hyperparameters for further improvement.
