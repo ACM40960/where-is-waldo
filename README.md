@@ -134,6 +134,9 @@ The YOLOv11 model was trained for object detection using the lightweight yolo11s
 ### Validation :
 Model performance was evaluated on the validation set using the best model checkpoint saved during training. The validation metrics (such as mAP, precision, and recall) were calculated based on the annotations defined in the dataset.
 
+```bash
+    !yolo task=detect mode=val model="/content/runs/detect/train/weights/best.pt" data={dataset.location}/data.yaml
+```
 ### Testing:
 
 For final testing and inference, the best trained model was used to make predictions on the test images. A confidence threshold of 0.573 was set to filter detections. The predictions were saved for further visualization and review.
