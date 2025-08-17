@@ -66,7 +66,7 @@ where-is-waldo/
 
 4. Steps: preprocessing → training → evaluation → inference
 
-![Project Structure](/assets/images/waldov2.jpg "Project Structure")
+![Project Structure](/assets/images/waldov2.png "Project Structure")
 
 ---
 
@@ -119,7 +119,7 @@ By default, preprocess.py writes to ./datasets/train/ (change dest_path to ./dat
     python generateData.py
 
 ### Model Configuration
-![YOLO Model Architecture](/assets/images/YOLOv11.jpg "YOLOv11 Architecture")
+![YOLO Model Architecture](/assets/images/YOLOv11.wbep "YOLOv11 Architecture")
 
 The YOLOv11 model is configured for object detection using the Ultralytics CLI with a lightweight pre-trained backbone (yolo11s.pt). It is trained on custom data for 500 epochs with a batch size of 10, using an image resolution of 640×640 pixels. A weight decay of 0.0005 is applied to prevent overfitting. The training is guided by the data.yaml file, which defines the dataset structure, including class names and paths to images. This setup ensures efficient and robust learning tailored for detecting Waldo in the provided dataset.
 
