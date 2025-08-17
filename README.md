@@ -121,9 +121,7 @@ By default, preprocess.py writes to ./datasets/train/ (change dest_path to ./dat
 ### Model Configuration
 ![YOLO Model Architecture](/assets/images/YOLOv11.webp "YOLOv11 Architecture")
 
-The YOLOv11 model is configured for object detection using the Ultralytics CLI with a lightweight pre-trained backbone (yolo11s.pt). It is trained on custom data for 500 epochs with a batch size of 10, using an image resolution of 640×640 pixels. A weight decay of 0.0005 is applied to prevent overfitting. The training is guided by the data.yaml file, which defines the dataset structure, including class names and paths to images. This setup ensures efficient and robust learning tailored for detecting Waldo in the provided dataset.
-
-
+In our model, we use YOLOv11 (You Only Look Once version 11), a state-of-the-art real-time object detection architecture. YOLOv11 enhances detection accuracy and speed by incorporating lightweight backbone networks, improved anchor-free detection heads, and dynamic label assignment strategies. For our configuration, we fine-tuned YOLOv11 with custom dataset-specific hyperparameters, including image size, batch size, learning rate, and training epochs, ensuring optimal performance for the target detection task.
 
 ### Training the Model
 The YOLOv11 model was trained for object detection using the lightweight yolo11s.pt backbone. Training was performed for 500 epochs with a batch size of 10 and an image size of 640×640 pixels. A weight decay of 0.0005 was applied to regularize the model and reduce overfitting. The dataset path and class configuration were defined in the data.yaml file, and training output (including weights and logs) was saved automatically by Ultralytics.
