@@ -26,7 +26,7 @@ where-is-waldo/
 ├── labelled_data/ # raw dataset from kaggle ignored in git upload due to huge dataset
 │ ├── images/ # high-res original images
 │ └── labels/ # resp labels of each img from Roboflow
-│── models/ #ignored in git upload 
+│── models/ #ignored in git upload due to file size
 │ ├── yolo11n_custom.pt # pretrained weights (model configuration)
 ├── tests/ # 10% testing dataset ignored in git upload due to huge dataset
 │    ├── input/ # input data for test
@@ -126,7 +126,7 @@ By default, preprocess.py writes to ./datasets/train/ (change dest_path to ./dat
 In our model, we use YOLOv11 (You Only Look Once version 11), a state-of-the-art real-time object detection architecture. YOLOv11 enhances detection accuracy and speed by incorporating lightweight backbone networks, improved anchor-free detection heads, and dynamic label assignment strategies. For our configuration, we fine-tuned YOLOv11 with custom dataset-specific hyperparameters, including image size, batch size, learning rate, and training epochs, ensuring optimal performance for the target detection task.
 
 ### Training :
-The YOLOv11 model was trained for object detection using the lightweight **yolo11n.pt** backbone. Training was performed for 500 epochs with a batch size of 10 and an image size of 640×640 pixels. A weight decay of 0.0005 was applied to regularize the model and reduce overfitting. The dataset path and class configuration were defined in the **data.yaml** file, and training output (including weights and logs) was saved automatically by Ultralytics.
+The YOLOv11 model was trained for object detection using the lightweight **yolo11n.pt** backbone. Training was performed for 100 epochs with a batch size of 50 and an image size of 640×640 pixels.The dataset path and class configuration were defined in the **data.yaml** file, and training output (including weights and logs) was saved automatically by Ultralytics.
 
 ```bash
     python train.py
