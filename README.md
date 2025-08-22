@@ -17,21 +17,23 @@ where-is-waldo/
 │ └── images/ # images for README.md
 │
 ├── datasetV3/ # train and val datasets (populated from preprocess.py ignored in git due to huge dataset)
-│ ├── images/ 
-│ └── labels/ 
+│ ├── 3-Fold_Cross-val/ 
+│ │  ├── split_1/ # train val split 1
+│ │  ├── split_2/ # train val split 2
+│ │  └── split_3/ # train val split 3
+│ ├── test/  # 10% testing dataset ignored in git upload due to huge dataset
+│ │  ├── images/ 
+│ │  └── labels/ 
+│ └── train_val/ 
+│    ├── images/ 
+│    └── labels/ 
 │
 ├── labelled_data/ # raw dataset from kaggle ignored in git upload due to huge dataset
 │ ├── images/ # high-res original images
 │ └── labels/ # resp labels of each img from Roboflow
 │
-│── models/ #ignored in git upload due to file size
-│ ├── yolo11n_custom.pt # pretrained weights (model configuration)
-├── tests/ # 10% testing dataset ignored in git upload due to huge dataset
-│    ├── input/ # input data for test
-│    └── output/ # output of test
-│
-├── waldoData/ # 10% testing dataset ignored in git upload due to huge dataset
-│    ├── Clean/ # input data for test
+├── waldoData/ # data used in generating more dataset
+│    ├── Clean/ 
 │    │ ├── ClearedWaldos/ # bg imgs with no waldo
 │    │ └── OnlyWaldoHeads/ # only waldo heads
 │    ├── NotWaldo/ # imgs populate from generateData.py
@@ -39,13 +41,10 @@ where-is-waldo/
 ├── .gitignore
 ├── customLib.py # python utility functions
 ├── data.yaml # yaml file (to be referenced by train.py)
-├── generateData.py # generate training data****
-├── inference.py # predict on test data
+├── generateData.py # generate training data
 ├── preprocess.py # preprocess data****
 ├── README.md 
 ├── requirements.txt
-├── train.py # python script to train data
-├── validate.py # python script to evaluate data
 ```
 
 ---
