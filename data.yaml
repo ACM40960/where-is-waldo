@@ -1,7 +1,7 @@
-train: datasets/train/images
-val: datasets/val/images
+train: datasetV3/train_val/images
+val: datasetV3/train_val/images
 
-images: {'jpg','png'}
+images: {'jpg, png'}
 
 # Number of classes
 nc: 1

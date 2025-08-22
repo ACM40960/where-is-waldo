@@ -1,5 +1,8 @@
 datasets
+datasetV3
 waldoData
+kfold_demo
+venv
 tests
 labelled_data
 models
