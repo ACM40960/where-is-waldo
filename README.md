@@ -15,17 +15,15 @@ This project implements an automated visual search system to detect Waldo in den
 where-is-waldo/
 ├── assets/ # assets for readme
 │ └── images/ # images for README.md
-├── datasets/ # train and val datasets (populated from preprocess.py ignored in git due to huge dataset)
-│ ├── train/ # 70% of dataset
-│ │  ├── images/ # jpg files
-│ │  └── labels/ # txt files
-│ └── val/  # 20 % of dataset
-│    ├── images/ # jpg files
-│    └── labels/ # txt files
+│
+├── datasetV3/ # train and val datasets (populated from preprocess.py ignored in git due to huge dataset)
+│ ├── images/ 
+│ └── labels/ 
 │
 ├── labelled_data/ # raw dataset from kaggle ignored in git upload due to huge dataset
 │ ├── images/ # high-res original images
 │ └── labels/ # resp labels of each img from Roboflow
+│
 │── models/ #ignored in git upload due to file size
 │ ├── yolo11n_custom.pt # pretrained weights (model configuration)
 ├── tests/ # 10% testing dataset ignored in git upload due to huge dataset
@@ -90,12 +88,6 @@ where-is-waldo/
    ```bash
     pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu118 # Example for CUDA 11.8
     
-5. **Define all User Defined Functions** (define and run all functions to be used in below steps)
-
-   ```bash
-    python customLib.py
-    ```
-    
 ---
 
 ### Dataset Preparation
@@ -109,46 +101,66 @@ where-is-waldo/
     ```bash
     python preprocess.py
 
-By default, preprocess.py writes to ./datasets/train/ (change dest_path to ./datasets/val/ for validation split).
+By default, preprocess.py writes to ./datasetV3/train_val/ (dir contains both train and validation set).
 
-4. (OPTIONAL) Generate extra Training Data - Use onlyWaldoHeads to paste on clear backgrounds with some rotations into 640×640 chips. Images with Waldo will populate in waldoData/Waldo folder. 
+4. (OPTIONAL) Generate extra Training Data - Use onlyWaldoHeads to paste on ClearedWaldos backgrounds with some rotations into 640×640 chips. Images with Waldo will populate in waldoData/Waldo folder. 
 
     4.1 Repeat step 2 to create new labels
 
-    4.2 Append datasets/train and datasets/val accordingly.
+    4.2 Append datasetV3/train_val accordingly.
 
     ```bash
     python generateData.py
 
+OR
+
+1. Directly download the refined dataset from [here - datasetV3](https://www.kaggle.com/datasets/bakshi15/waldo-dataset-v3) this has separate test directory and a combined train+validation directory(which gets randomly divided in cross validation step)
+
 ## Model Configuration
+
 ![YOLO Model Architecture](/assets/images/YOLOv11.webp "YOLOv11 Architecture")
 
 In our model, we use YOLOv11 (You Only Look Once version 11), a state-of-the-art real-time object detection architecture. YOLOv11 enhances detection accuracy and speed by incorporating lightweight backbone networks, improved anchor-free detection heads, and dynamic label assignment strategies. For our configuration, we fine-tuned YOLOv11 with custom dataset-specific hyperparameters, including image size, batch size, learning rate, and training epochs, ensuring optimal performance for the target detection task.
 
-### Training :
-The YOLOv11 model was trained for object detection using the lightweight **yolo11n.pt** backbone. Training was performed for 100 epochs with a batch size of 50 and an image size of 640×640 pixels.The dataset path and class configuration were defined in the **data.yaml** file, and training output (including weights and logs) was saved automatically by Ultralytics.
+## Refer wald0-search.iypnb file for next steps:
 
-```bash
-    python train.py
-```
+### Cross Validation :
+
+The notebook uses K-Fold cross-validation to split the dataset:
+
+n_splits: Number of folds (e.g., 3 or 5)
+
+random_state: Ensures reproducibility
+
+This allows the model to train and validate across multiple subsets of data.
+
+Here we applied 3-fold cross validation
+
+### Training :
+
+Use a deep learning model (e.g., YOLO from ultralytics) for training.
+
+For each fold:
+train_data: Data for model training
+val_data: Data for validation
+Repeat for each fold to improve generalization
+
+The YOLOv11 model was trained for object detection using the lightweight **yolo11n.pt** backbone. Training was performed for 100 epochs with a batch size of 16 and an image size of 640×640 pixels.The dataset path and class configuration were defined in the respective **data.yaml** file, and training output (including weights and logs) were saved automatically by Ultralytics.
 
 
 ### Validation :
-Model performance was evaluated on the validation set using the best model checkpoint saved during training. The validation metrics (such as mAP, precision, and recall) were calculated based on the annotations defined in the dataset.
+Each split Model performance was evaluated on the validation set using the best model checkpoint saved during training. The validation metrics (such as mAP, precision, and recall) were calculated based on the annotations defined in the dataset.
 
-```bash
-    python validate.py
-```
 ### Testing:
 
-For final testing and inference, the best trained model was used to make predictions on the test images. A confidence threshold of 0.573 was set to filter detections. The predictions were saved for further visualization and review.
+For final testing and inference, the best trained model was used to make predictions on the test images. The predictions were saved for further visualization and review.
 
-```bash
-    python inference.py
-```
+predictions = model.predict(test_images)
+for img, pred in zip(test_images, predictions):
+    display(pred.show())
 
-If the performance metrics are satisfactory, the best-performing model weights are exported and saved for deployment.
-If not, the training process is revisited with adjusted hyperparameters for further improvement.
+model.predict(): Returns bounding boxes or class predictions
+
 
 ### Result : There he is !
 The model is now able to detect Waldo accurately within the images, demonstrating the effectiveness of our object detection pipeline.
